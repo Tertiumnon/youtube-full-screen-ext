@@ -11,20 +11,33 @@
     "build": "bun build.ts",
     "test": "bun test",
     "check": "tsc --noEmit",
+    "typecheck": "bun run check",
     "lint": "bun run build && web-ext lint --warnings-as-errors",
     "validate": "bun run check && bun test && bun run lint",
     "package": "bun run validate && web-ext build --overwrite-dest",
     "sign": "bun run validate && web-ext sign --channel=unlisted",
-    "publish": "bun run validate && web-ext sign --channel=listed"
+    "publish": "bun run validate && web-ext sign --channel=listed",
+    "hooks:install": "bun node_modules/@tertium/js/scripts/git-hooks/git-hooks.ts",
+    "changelog": "bun node_modules/@tertium/js/scripts/changelog/changelog.ts --dry-run",
+    "preversion": "bun run validate",
+    "version": "bun scripts/sync-version.ts && bun node_modules/@tertium/js/scripts/changelog/changelog.ts && git add src/manifest.json CHANGELOG.md",
+    "release:patch": "npm version patch",
+    "release:minor": "npm version minor",
+    "release:major": "npm version major",
+    "prepare": "bun scripts/prepare.ts"
   },
   "engines": {
     "bun": ">=1.4.2",
     "node": ">=22"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@tertium/js": "4.0.0",
+    "@types/bun": "^1.4.2",
     "happy-dom": "latest",
     "typescript": "latest",
     "web-ext": "10.7.0"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.5"
   }
 }

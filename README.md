@@ -29,6 +29,8 @@ bun run dev
 | `bun run package` | Validate and create an unsigned ZIP in `web-ext-artifacts/`. |
 | `bun run sign` | Validate and submit to Mozilla for unlisted signing; download the signed XPI. |
 | `bun run publish` | Validate and submit a public AMO listing or update. |
+| `bun run changelog` | Preview the next changelog entry from Git history. |
+| `bun run release:patch`, `release:minor`, `release:major` | Validate, bump versions, update the changelog, then create a local Git commit and tag. |
 
 To select a Firefox executable or open debugging tools:
 
@@ -57,9 +59,11 @@ For CLI submission, obtain [AMO API credentials](https://addons.mozilla.org/deve
 
 Run `bun run sign` for a signed extension you distribute yourself, or `bun run publish` for a public AMO submission. Both commands upload the extension to Mozilla. For a first public listing, pass `--amo-metadata=amo-metadata.json` to `bun run publish`; supply your summary, category, and chosen license according to [Mozilla's metadata requirements](https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#--amo-metadata). No license is selected for you. Public submissions may require review and do not necessarily produce a local XPI immediately.
 
-For review of this TypeScript build, provide a source archive using `--upload-source-code=path/to/source.zip` (or upload it through the Developer Hub). Include `src/`, `tests/`, `build.ts`, `package.json`, `bun.lock`, `tsconfig.json`, `web-ext-config.mjs`, and this README; exclude credentials, `node_modules/`, and generated artifacts. Reviewers can reproduce the build with `bun install --frozen-lockfile` and `bun run build`.
+For review of this TypeScript build, provide a source archive using `--upload-source-code=path/to/source.zip` (or upload it through the Developer Hub). Include `src/`, `tests/`, `scripts/`, `.githooks/`, `build.ts`, `package.json`, `bun.lock`, `tsconfig.json`, `web-ext-config.mjs`, and this README; exclude credentials, `node_modules/`, and generated artifacts. Reviewers can reproduce the build with `bun install --frozen-lockfile` and `bun run build`.
 
-Keep the extension ID stable after the first submission. Increase `src/manifest.json`'s version for each release and keep `package.json`'s version in sync. Signing and publishing require your AMO account; they are not part of `build`, `validate`, or `package`.
+Keep the extension ID stable after the first submission. `@tertium/js` is pinned at 4.0.0 and provides the changelog and Git hook tools. Run `bun run release:patch` (or `release:minor` / `release:major`) on a clean working tree to run validation, bump `package.json`, synchronize `src/manifest.json`, add a `CHANGELOG.md` entry from Git commits, and create a local commit and `v` tag. Push the commit and tag when ready; these scripts do not submit to AMO. Then run `bun run sign` or `bun run publish` separately with your AMO credentials.
+
+The tracked `.githooks/pre-commit` runs lint, type checking, and tests. `bun install` sets `core.hooksPath` through the `prepare` script when installed in a Git checkout; run `bun run hooks:install` if you need to regenerate the hook. On Windows, Git for Windows supplies the shell used by the hook. [The shared package's release script](https://www.npmjs.com/package/@tertium/js) assumes a `develop` branch and pushes it, so this single-branch extension uses the package's changelog and hook utilities with local `npm version` commands instead.
 
 ## Scope and checks
 
