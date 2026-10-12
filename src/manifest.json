@@ -3,6 +3,13 @@
   "name": "YouTube Full Window",
   "version": "0.1.0",
   "description": "Fill the browser window with the YouTube player while keeping its controls.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "96": "icons/icon-96.png"
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "youtube-full-window@local.extensions",

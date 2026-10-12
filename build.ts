@@ -1,4 +1,4 @@
-import { watch } from "node:fs/promises";
+import { cp, watch } from "node:fs/promises";
 
 async function build() {
   const result = await Bun.build({
@@ -11,6 +11,7 @@ async function build() {
   for (const file of ["manifest.json", "content.css"]) {
     await Bun.write(`dist/${file}`, Bun.file(`src/${file}`));
   }
+  await cp("src/icons", "dist/icons", { recursive: true });
   console.log("Built Firefox extension in dist/");
 }
 

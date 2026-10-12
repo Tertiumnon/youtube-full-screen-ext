@@ -16,6 +16,7 @@ bun run dev
 | `bun run watch` | Rebuild on source changes without launching Firefox. |
 | `bun run firefox` | Run the existing `dist/` build in Firefox. |
 | `bun run build` | Compile and copy extension files to `dist/`. |
+| `bun run icons` | Regenerate `src/icons/` from `img/logo.png` with sharp. |
 | `bun run check` | Check TypeScript types. |
 | `bun test` | Run behavior tests. |
 | `bun run lint` | Build and run Mozilla's validator; warnings fail the command. |
