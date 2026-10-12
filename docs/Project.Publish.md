@@ -1,0 +1,13 @@
+# Sign or publish
+
+`package` creates an unsigned ZIP suitable for uploading to the [AMO Developer Hub](https://addons.mozilla.org/developers/). Renaming it to `.xpi` does not sign it.
+
+For CLI submission, obtain [AMO API credentials](https://addons.mozilla.org/developers/addon/api/key/) and set `WEB_EXT_API_KEY` (JWT issuer) and `WEB_EXT_API_SECRET` (JWT secret) in your environment. Alternatively, place them in a local `.env` file; Bun loads it and Git ignores it. Never put credentials in package scripts or commit them.
+
+Run `bun run sign` for a signed extension you distribute yourself, or `bun run publish` for a public AMO submission. Both commands upload the extension to Mozilla. For a first public listing, pass `--amo-metadata=amo-metadata.json` to `bun run publish`; supply your summary, category, and chosen license according to [Mozilla's metadata requirements](https://extensionworkshop.com/documentation/develop/web-ext-command-reference/#--amo-metadata). No license is selected for you. Public submissions may require review and do not necessarily produce a local XPI immediately.
+
+For review of this TypeScript build, provide a source archive using `--upload-source-code=path/to/source.zip` (or upload it through the Developer Hub). Include `src/`, `tests/`, `scripts/`, `.githooks/`, `build.ts`, `package.json`, `bun.lock`, `tsconfig.json`, `web-ext-config.mjs`, and this README; exclude credentials, `node_modules/`, and generated artifacts. Reviewers can reproduce the build with `bun install --frozen-lockfile` and `bun run build`.
+
+Keep the extension ID stable after the first submission. `@tertium/js` is pinned at 4.0.0 and provides the changelog and Git hook tools. Run `bun run release:patch` (or `release:minor` / `release:major`) on a clean working tree to run validation, bump `package.json`, synchronize `src/manifest.json`, add a `CHANGELOG.md` entry from Git commits, and create a local commit and `v` tag. Push the commit and tag when ready; these scripts do not submit to AMO. Then run `bun run sign` or `bun run publish` separately with your AMO credentials.
+
+The tracked `.githooks/pre-commit` runs lint, type checking, and tests. `bun install` sets `core.hooksPath` through the `prepare` script when installed in a Git checkout; run `bun run hooks:install` if you need to regenerate the hook. On Windows, Git for Windows supplies the shell used by the hook. [The shared package's release script](https://www.npmjs.com/package/@tertium/js) assumes a `develop` branch and pushes it, so this single-branch extension uses the package's changelog and hook utilities with local `npm version` commands instead.
