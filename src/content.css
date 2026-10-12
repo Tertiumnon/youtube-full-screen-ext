@@ -1,0 +1,81 @@
+html.ytfw-active,
+.ytfw-active body {
+  overflow: hidden !important;
+}
+
+/* Keep the existing player mounted so playback, captions and settings survive. */
+.ytfw-active .ytfw-ancestor {
+  transform: none !important;
+  translate: none !important;
+  rotate: none !important;
+  scale: none !important;
+  perspective: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  contain: none !important;
+  content-visibility: visible !important;
+  will-change: auto !important;
+  overflow: visible !important;
+}
+
+.ytfw-active .ytfw-ancestor > :not(.ytfw-ancestor):not(.ytfw-player) {
+  display: none !important;
+}
+
+.ytfw-active #movie_player.ytfw-player {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  z-index: 2147483647 !important;
+  background: #000 !important;
+  border-radius: 0 !important;
+}
+
+.ytfw-player .html5-video-container {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ytfw-player video.html5-main-video {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.ytfw-player .ytp-chrome-bottom {
+  width: calc(100% - 24px) !important;
+  left: 12px !important;
+}
+
+.ytfw-button {
+  position: relative !important;
+}
+
+.ytfw-button svg {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ytfw-button[aria-pressed="true"] svg {
+  transform: translate(-50%, -50%) scale(.85);
+}
+
+.ytfw-button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -4px;
+}

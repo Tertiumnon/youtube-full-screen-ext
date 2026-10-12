@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Full Window",
+  "version": "1.0.0",
+  "description": "Fill the browser window with the YouTube player while keeping its controls.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youtube-full-window@local.extensions",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": { "required": ["none"] }
+    }
+  },
+  "content_scripts": [{
+    "matches": ["https://www.youtube.com/*"],
+    "js": ["content.js"],
+    "css": ["content.css"],
+    "run_at": "document_idle"
+  }]
+}
