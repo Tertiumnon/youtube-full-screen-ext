@@ -1,4 +1,4 @@
-# YouTube Full Window
+# Full Windowed Youtube
 
 Open source and totally free Firefox extension for YouTube.
 

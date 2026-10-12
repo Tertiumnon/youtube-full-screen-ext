@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Full Window",
+  "name": "Full Windowed Youtube",
   "version": "0.1.0",
   "description": "Fill the browser window with the YouTube player while keeping its controls.",
   "icons": {
