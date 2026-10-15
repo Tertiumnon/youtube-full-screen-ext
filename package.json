@@ -9,6 +9,8 @@
     "firefox": "web-ext run",
     "start": "bun run build && bun run firefox",
     "build": "bun build.ts",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
     "icons": "bun scripts/generate-icons.ts",
     "test": "bun test",
     "check": "tsc --noEmit",
@@ -32,6 +34,7 @@
     "node": ">=22"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
     "@tertium/js": "4.0.0",
     "@types/bun": "^1.4.2",
     "happy-dom": "latest",

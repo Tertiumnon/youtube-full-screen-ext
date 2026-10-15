@@ -18,21 +18,32 @@ test("watch rebuilds TS, CSS and manifest and recovers after a build error", asy
     await cp("src", join(directory, "src"), { recursive: true });
     await cp("build.ts", join(directory, "build.ts"));
     child = Bun.spawn([process.execPath, "build.ts", "--watch"], {
-      cwd: directory, stdout: "pipe", stderr: "ignore",
+      cwd: directory,
+      stdout: "pipe",
+      stderr: "ignore",
     });
     let output = "";
     const stdout = child.stdout as ReadableStream<Uint8Array>;
-    const reading = stdout.pipeTo(new WritableStream({
-      write(chunk) { output += new TextDecoder().decode(chunk); },
-    }));
+    const reading = stdout.pipeTo(
+      new WritableStream({
+        write(chunk) {
+          output += new TextDecoder().decode(chunk);
+        },
+      }),
+    );
     await waitFor(() => output.includes("Watching src/"));
     const css = Bun.file(join(directory, "dist/content.css"));
     await Bun.write(join(directory, "src/content.css"), "/* watch check */");
     await waitFor(async () => (await css.text()) === "/* watch check */");
 
-    const manifest = await Bun.file(join(directory, "src/manifest.json")).json();
+    const manifest = await Bun.file(
+      join(directory, "src/manifest.json"),
+    ).json();
     manifest.version = "1.0.1";
-    await Bun.write(join(directory, "src/manifest.json"), JSON.stringify(manifest));
+    await Bun.write(
+      join(directory, "src/manifest.json"),
+      JSON.stringify(manifest),
+    );
     await waitFor(async () => {
       // The watcher may still be writing the manifest when this poll reads it.
       const text = await Bun.file(join(directory, "dist/manifest.json")).text();
@@ -42,8 +53,15 @@ test("watch rebuilds TS, CSS and manifest and recovers after a build error", asy
     await Bun.write(join(directory, "src/content.ts"), "const = ;");
     await Bun.sleep(150);
     expect(child.exitCode).toBe(null);
-    await Bun.write(join(directory, "src/content.ts"), 'console.log("watch recovered");');
-    await waitFor(async () => (await Bun.file(join(directory, "dist/content.js")).text()).includes("watch recovered"));
+    await Bun.write(
+      join(directory, "src/content.ts"),
+      'console.log("watch recovered");',
+    );
+    await waitFor(async () =>
+      (await Bun.file(join(directory, "dist/content.js")).text()).includes(
+        "watch recovered",
+      ),
+    );
     child.kill();
     await child.exited;
     await reading;

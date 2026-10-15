@@ -18,8 +18,27 @@ html.ytfw-active,
   overflow: visible !important;
 }
 
-.ytfw-active .ytfw-ancestor > :not(.ytfw-ancestor):not(.ytfw-player) {
+.ytfw-active
+  .ytfw-ancestor
+  > :not(.ytfw-ancestor):not(.ytfw-player):not(#masthead-container) {
   display: none !important;
+}
+
+.ytfw-active #masthead-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 2147483647 !important;
+  transform: translateY(-100%) !important;
+  transition: transform 0.2s ease;
+}
+
+/* Follow the player's controls timer; keep the header usable while interacting with it. */
+.ytfw-active:has(.ytfw-player:hover:not(.ytp-autohide)) #masthead-container,
+.ytfw-active #masthead-container:hover,
+.ytfw-active #masthead-container:focus-within {
+  transform: translateY(0) !important;
 }
 
 .ytfw-active #movie_player.ytfw-player {
@@ -30,7 +49,7 @@ html.ytfw-active,
   max-width: none !important;
   max-height: none !important;
   margin: 0 !important;
-  z-index: 2147483647 !important;
+  z-index: 2147483646 !important;
   background: #000 !important;
   border-radius: 0 !important;
 }
@@ -63,8 +82,8 @@ html.ytfw-active,
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
-  width: 26px !important;
-  height: 26px !important;
+  width: 28px !important;
+  height: 28px !important;
   padding: 0 !important;
   margin: 0 !important;
   transform: translate(-50%, -50%);
@@ -72,7 +91,7 @@ html.ytfw-active,
 }
 
 .ytfw-button[aria-pressed="true"] svg {
-  transform: translate(-50%, -50%) scale(.85);
+  transform: translate(-50%, -50%) scale(0.85);
 }
 
 .ytfw-button:focus-visible {
