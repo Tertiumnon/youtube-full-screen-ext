@@ -1,6 +1,6 @@
 {
   "name": "full-windowed-youtube-ext",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Expand YouTube videos to fill the browser window without entering fullscreen mode.",
   "author": "Vitalii Balabanov",
   "repository": "https://github.com/Tertiumnon/youtube-full-window-ext.git",

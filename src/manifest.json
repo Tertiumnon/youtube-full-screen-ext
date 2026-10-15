@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Full Windowed Youtube",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fill the browser window with the YouTube player while keeping its controls.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -14,14 +14,24 @@
     "gecko": {
       "id": "youtube-full-window@local.extensions",
       "strict_min_version": "142.0",
-      "data_collection_permissions": { "required": ["none"] }
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   },
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle"
     }
   ]
