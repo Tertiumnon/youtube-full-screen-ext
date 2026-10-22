@@ -1,3 +1,22 @@
 type: firefox-extension
-publish_on:
+slug: full-windowed-youtube-ext
+listed_on:
   - https://tertiumnon.github.io
+display_name:
+  en: "Full Windowed YouTube"
+summary:
+  en: "Firefox extension that adds a button to YouTube's control bar to fill the browser window with the player."
+languages:
+  - en
+default_language: en
+platforms:
+  firefox:
+    identifier: youtube-full-window@local.extensions
+    distribution:
+      - firefox-addons
+team:
+  - name: Vitalii Balabanov
+    roles:
+      - owner
+      - developer
+    github: Tertiumnon
